@@ -30,7 +30,6 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                         this._negotiationView.update(this._negotiations);
                     }
                     add(event) {
-                        event.preventDefault();
                         const negotiation = new index_1.Negotiation(new Date(this._inputDate.val().replace(/-/g, ",")), parseFloat(this._inputValue.val()), parseInt(this._inputAmount.val()));
                         this._negotiations.add(negotiation);
                         this._negotiationView.update(this._negotiations);
@@ -63,6 +62,12 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                 __decorate([
                     index_3.domInject('#quantidade')
                 ], NegotiationController.prototype, "_inputAmount", void 0);
+                __decorate([
+                    index_3.throttle()
+                ], NegotiationController.prototype, "add", null);
+                __decorate([
+                    index_3.throttle()
+                ], NegotiationController.prototype, "importData", null);
                 return NegotiationController;
             })();
             exports_1("NegotiationController", NegotiationController);

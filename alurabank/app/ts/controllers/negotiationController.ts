@@ -1,6 +1,6 @@
 import { Negotiation, Negotiations, PartialNegotiation } from '../models/index'
 import { MessageView, NegotiationView } from '../views/index'
-import { domInject } from '../helpers/decorators/index';
+import { domInject, throttle } from '../helpers/decorators/index';
 
 export class NegotiationController {
 
@@ -21,10 +21,8 @@ export class NegotiationController {
         this._negotiationView.update(this._negotiations);
     }
 
-    add(event: Event) {
-
-        event.preventDefault();
-
+    @throttle()
+    add(event: Event) {       
         const negotiation = new Negotiation(
             new Date(this._inputDate.val().replace(/-/g, ",")),
             parseFloat(this._inputValue.val()),
@@ -37,6 +35,7 @@ export class NegotiationController {
         this._messageView.update("Negociação incluida com sucesso!");
     }
 
+    @throttle()
     importData() {
 
         function isOK(res: Response){
