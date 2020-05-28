@@ -36,6 +36,23 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                         this._negotiationView.update(this._negotiations);
                         this._messageView.update("Negociação incluida com sucesso!");
                     }
+                    importData() {
+                        function isOK(res) {
+                            if (res.ok)
+                                return res;
+                            throw new Error(res.statusText);
+                        }
+                        fetch('http://localhost:8080/dados')
+                            .then(res => isOK(res))
+                            .then(res => res.json())
+                            .then((dados) => {
+                            dados
+                                .map(dado => new index_1.Negotiation(new Date(), dado.montante, dado.vezes))
+                                .forEach(negotiation => this._negotiations.add(negotiation));
+                            this._negotiationView.update(this._negotiations);
+                        })
+                            .catch(err => console.log(err.message));
+                    }
                 }
                 __decorate([
                     index_3.domInject('#data')
