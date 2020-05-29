@@ -1,6 +1,8 @@
 import { Negotiation, Negotiations, PartialNegotiation } from '../models/index'
 import { MessageView, NegotiationView } from '../views/index'
 import { domInject, throttle } from '../helpers/decorators/index';
+import { NegotiationService } from '../services/negotiationService';
+
 
 export class NegotiationController {
 
@@ -16,9 +18,10 @@ export class NegotiationController {
     private _negotiations = new Negotiations();
     private _negotiationView = new NegotiationView('#negotiationView', true);
     private _messageView = new MessageView('#mensagemView');
+    private _service = new NegotiationService();
 
     constructor() {
-        this._negotiationView.update(this._negotiations);
+        this._negotiationView.update(this._negotiations);        
     }
 
     @throttle()
@@ -37,26 +40,14 @@ export class NegotiationController {
 
     @throttle()
     importData() {
-
-        function isOK(res: Response){
-            if(res.ok)
-                return res;
-            
+        this._service.getNegotiations(res => {
+            if(res.ok) return res;
             throw new Error(res.statusText);
-        }
-
-        fetch('http://localhost:8080/dados')
-            .then(res => isOK(res))
-            .then(res => res.json())
-            .then((dados: PartialNegotiation[]) => {
-                dados
-                    .map(dado => new Negotiation(new Date(), dado.montante, dado.vezes))
-                    .forEach(negotiation => this._negotiations.add(negotiation))
-                
-                this._negotiationView.update(this._negotiations);
-                
-            })
-            .catch(err => console.log(err.message));
+        })
+        .then(negotiations => {
+            negotiations.forEach(negotiation => this._negotiations.add(negotiation));
+            this._negotiationView.update(this._negotiations);
+        });
     }
 
 }
