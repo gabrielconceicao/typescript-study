@@ -15,7 +15,7 @@ System.register(["../models/index"], function (exports_1, context_1) {
                         .then(res => handler(res))
                         .then(res => res.json())
                         .then((dados) => dados.map(dado => new index_1.Negotiation(new Date(), dado.vezes, dado.montante)))
-                        .catch(err => { throw new Error("Erro ao obter dados da api"); });
+                        .catch(err => { throw new Error("Erro ao obter os dados da API"); });
                 }
             };
             exports_1("NegotiationService", NegotiationService);

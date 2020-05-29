@@ -42,6 +42,7 @@ export class NegotiationController {
     importData() {
         this._service.getNegotiations(res => {
             if(res.ok) return res;
+            this._messageView.update(res.statusText)
             throw new Error(res.statusText);
         })
         .then(negotiations => {
@@ -54,4 +55,26 @@ export class NegotiationController {
         });
     }
 
+    /* EXAMPLE OF ASYNC AND AWAIT
+
+    @throttle()
+    async importData() {
+        try {
+            const negotiations = await this._service.getNegotiations(res => {
+                if(res.ok) return res;
+                this._messageView.update(res.statusText);
+            });
+            
+            const importNegotiations = this._negotiations.getAllNegotiations();
+            negotiations
+                .filter( negotiation => !importNegotiations.some(alreadyImport => negotiation.equals(alreadyImport)))
+                .forEach(negotiation => this._negotiations.add(negotiation));
+
+            this._negotiationView.update(this._negotiations);
+            this._messageView.update("Importação concluída com sucesso!");
+        } catch(err){
+            this._messageView.update(err.console);
+        }
+    } */
+    
 }

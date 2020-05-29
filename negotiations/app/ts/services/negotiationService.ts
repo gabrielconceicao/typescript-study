@@ -9,7 +9,7 @@ export class NegotiationService {
                 .then((dados: PartialNegotiation[]) => 
                     dados.map(dado => new Negotiation(new Date(), dado.vezes, dado.montante))
                 )
-                .catch(err => {throw new Error("Erro ao obter dados da api")});
+                .catch(err => { throw new Error("Erro ao obter os dados da API")});
     }
 }
 

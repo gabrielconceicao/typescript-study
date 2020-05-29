@@ -43,6 +43,7 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                         this._service.getNegotiations(res => {
                             if (res.ok)
                                 return res;
+                            this._messageView.update(res.statusText);
                             throw new Error(res.statusText);
                         })
                             .then(negotiations => {
