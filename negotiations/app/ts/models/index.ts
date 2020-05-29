@@ -1,3 +1,5 @@
 export * from './negotiation'
 export * from './negotiations'
 export * from './partialNegotiations'
+export * from './equals'
+export * from './print'

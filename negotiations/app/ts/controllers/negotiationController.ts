@@ -1,4 +1,4 @@
-import { Negotiation, Negotiations, PartialNegotiation } from '../models/index'
+import { Negotiation, Negotiations } from '../models/index'
 import { MessageView, NegotiationView } from '../views/index'
 import { domInject, throttle } from '../helpers/decorators/index';
 import { NegotiationService } from '../services/negotiationService';
@@ -45,8 +45,12 @@ export class NegotiationController {
             throw new Error(res.statusText);
         })
         .then(negotiations => {
-            negotiations.forEach(negotiation => this._negotiations.add(negotiation));
+            const importNegotiations = this._negotiations.getAllNegotiations();
+            negotiations
+                .filter( negotiation => !importNegotiations.some(alreadyImport => negotiation.equals(alreadyImport)))
+                .forEach(negotiation => this._negotiations.add(negotiation));
             this._negotiationView.update(this._negotiations);
+            this._messageView.update("Importação concluída com sucesso!");
         });
     }
 

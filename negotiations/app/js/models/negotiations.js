@@ -15,6 +15,9 @@ System.register([], function (exports_1, context_1) {
                 getAllNegotiations() {
                     return [].concat(this._negotiations);
                 }
+                printLog() {
+                    console.log(JSON.stringify(this._negotiations));
+                }
             };
             exports_1("Negotiations", Negotiations);
         }

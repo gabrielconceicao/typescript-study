@@ -1,4 +1,4 @@
-System.register(["./negotiation", "./negotiations", "./partialNegotiations"], function (exports_1, context_1) {
+System.register(["./negotiation", "./negotiations", "./partialNegotiations", "./equals", "./print"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     function exportStar_1(m) {
@@ -18,6 +18,12 @@ System.register(["./negotiation", "./negotiations", "./partialNegotiations"], fu
             },
             function (partialNegotiations_1_1) {
                 exportStar_1(partialNegotiations_1_1);
+            },
+            function (equals_1_1) {
+                exportStar_1(equals_1_1);
+            },
+            function (print_1_1) {
+                exportStar_1(print_1_1);
             }
         ],
         execute: function () {

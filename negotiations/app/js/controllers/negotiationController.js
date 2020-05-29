@@ -46,8 +46,12 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                             throw new Error(res.statusText);
                         })
                             .then(negotiations => {
-                            negotiations.forEach(negotiation => this._negotiations.add(negotiation));
+                            const importNegotiations = this._negotiations.getAllNegotiations();
+                            negotiations
+                                .filter(negotiation => !importNegotiations.some(alreadyImport => negotiation.equals(alreadyImport)))
+                                .forEach(negotiation => this._negotiations.add(negotiation));
                             this._negotiationView.update(this._negotiations);
+                            this._messageView.update("Importação concluída com sucesso!");
                         });
                     }
                 }

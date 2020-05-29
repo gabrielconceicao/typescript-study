@@ -1,6 +1,7 @@
 import { Negotiation } from './negotiation'
+import { Print } from './print';
 
-export class Negotiations {
+export class Negotiations implements Print{
 
     private _negotiations : Negotiation[] = [];
 
@@ -10,5 +11,9 @@ export class Negotiations {
 
     getAllNegotiations() : Negotiation[] {
         return ([] as Negotiation[]).concat(this._negotiations);
+    }
+
+    printLog(): void {
+        console.log(JSON.stringify(this._negotiations));
     }
 }
